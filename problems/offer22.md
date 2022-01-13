@@ -35,12 +35,12 @@ class Solution {
     public ListNode getKthFromEnd(ListNode head, int k) {
         int size = 0;
         ListNode ptr = head;
-        while(ptr != null){
+        while(ptr != null){		//遍历一遍数组得到size
             ptr = ptr.next;
             size ++;
         }
         ptr = head;
-        for(int i = 0; i < size - k; i++){
+        for(int i = 0; i < size - k; i++){		//遍历第二遍得到第k个节点
             ptr = ptr.next;
         }
         return ptr;
@@ -61,10 +61,10 @@ class Solution {
     public ListNode getKthFromEnd(ListNode head, int k) {
         ListNode fast = head;
         ListNode slow = head;
-        for(int i = 0; i < k; i++){
+        for(int i = 0; i < k; i++){		// 让快指针指向第k+1个ListNode
             fast = fast.next;
         }
-        while(fast != null){
+        while(fast != null){		// 同时update快慢指针的值
             fast = fast.next;
             slow = slow.next;
         }
@@ -73,4 +73,55 @@ class Solution {
 }
 ```
 
-* 时间复杂度$O(n)$, 空间复杂度$O(1)$.
+* 时间复杂度$O(n)$, 空间复杂度$O(1)$​.
+
+### 3. Stack
+
+新建一个`Stack`, 然后把所有的节点插进去，然后再从其头部弹出k个节点。
+
+#### 代码实现
+
+```Java
+class Solution {
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        Stack<ListNode> stack = new Stack<ListNode>();
+        ListNode ptr = head;
+        while(ptr != null){
+            stack.push(ptr);
+            ptr = ptr.next;
+        }
+        for(int i = 0; i < k - 1; i++){
+            stack.pop();
+        }
+        return stack.pop();
+    }
+}
+```
+
+* 时间复杂度$O(n)$​, 空间复杂度$O(n)$.
+
+### 4. Queue
+
+新建一个`Queue`，把所有节点插进去，同时记下`Queue`的$size$, 然后再从头部弹出$size - k + 1$个节点。
+
+#### 代码实现
+
+```Java
+class Solution {
+    public ListNode getKthFromEnd(ListNode head, int k) {
+        Queue<ListNode> queue = new LinkedList<ListNode>();
+        ListNode ptr = head;
+        while(ptr != null){
+            queue.add(ptr);
+            ptr = ptr.next;
+        }
+        int size = queue.size(); // 需要一个变量来存queue的size因为每次poll()之后size会变
+        for(int i = 0; i < size - k; i++){
+            queue.poll();
+        }
+        return queue.poll();
+    }
+}
+```
+
+* 时间复杂度$O(n)$,空间复杂度$O(n)$​.
