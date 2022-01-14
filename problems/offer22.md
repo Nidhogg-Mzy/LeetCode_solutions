@@ -30,6 +30,8 @@
 
 #### 代码实现
 
+**Java 版：**
+
 ```Java
 class Solution {
     public ListNode getKthFromEnd(ListNode head, int k) {
@@ -48,13 +50,42 @@ class Solution {
 }
 ```
 
+**C++版：**
+
+```cpp
+class Solution {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        int length = 0;
+        ListNode* p = head;
+        // 遍历一遍得到size
+        while (p != nullptr) {
+            ++length;
+            p = p -> next;
+        }
+        int counter = 0;
+        p = head;
+        while (counter++ < length - k) {
+            p = p -> next;
+        }
+        return p;
+    }
+};
+```
+
 * 时间复杂度$O(n)$, 空间复杂度$O(1)$.
+
+
+
+
 
 ### 2. 快慢指针
 
 新建两个指针，让快指针指向第k+1​个`ListNode`, 让慢指针指向第1个`ListNode`, 然后让两个指针同步向后移动，当快指针指向链表尾部`null`时，慢指针的位置即为倒数第k个节点。
 
 ### 代码实现
+
+**java版：**
 
 ```Java
 class Solution {
@@ -73,7 +104,32 @@ class Solution {
 }
 ```
 
+**C++版：**
+
+```cpp
+class Solution {
+public:
+    ListNode* getKthFromEnd(ListNode* head, int k) {
+        ListNode* fast = head, *slow = head;
+        while (fast != nullptr && k-- > 0) {
+            fast = fast -> next;
+        }
+        // 此时快指针指向第k+1个节点，因此快指针比慢指针提前了k个点
+        // 快慢指针共同向后，当快指针到达尾部时，慢指针恰好是所求的节点
+        while (fast != nullptr) {
+            fast = fast -> next;
+            slow = slow -> next;
+        }
+        return slow;
+    }
+};
+```
+
 * 时间复杂度$O(n)$, 空间复杂度$O(1)$​.
+
+
+
+
 
 ### 3. Stack
 
@@ -99,6 +155,10 @@ class Solution {
 ```
 
 * 时间复杂度$O(n)$​, 空间复杂度$O(n)$.
+
+
+
+
 
 ### 4. Queue
 
