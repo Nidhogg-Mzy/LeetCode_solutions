@@ -121,7 +121,7 @@ public:
 };
 ```
 
-**C++版：**
+**Go版：**
 
 ```go
 type CQueue struct {
