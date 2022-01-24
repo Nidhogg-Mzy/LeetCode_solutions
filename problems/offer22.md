@@ -73,11 +73,30 @@ public:
 };
 ```
 
+**Go版：**
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func getKthFromEnd(head *ListNode, k int) *ListNode {
+    n := 0
+    node, k_th := head, head
+    for ; node != nil; node = node.Next {
+        n++
+    }
+    for ; n > k; n-- {
+        k_th = k_th.Next
+    }
+    return k_th
+}
+```
+
 * 时间复杂度$O(n)$, 空间复杂度$O(1)$.
-
-
-
-
 
 ### 2. 快慢指针
 
@@ -125,11 +144,31 @@ public:
 };
 ```
 
+**Go版：**
+
+```go
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
+func getKthFromEnd(head *ListNode, k int) *ListNode {
+    fast, slow := head, head
+    for fast != nil && k > 0 {
+        fast = fast.Next
+        k--
+    }   // move the fast pointer to k_th place正向第k个
+    for fast != nil {
+        fast = fast.Next    // fast 一直走到尽头，此时走了正向n-k个
+        slow = slow.Next    // slow 此时同时走正向n-k个，为倒数第k个节点，return即可
+    }
+    return slow
+}
+```
+
 * 时间复杂度$O(n)$, 空间复杂度$O(1)$​.
-
-
-
-
 
 ### 3. Stack
 

@@ -121,5 +121,47 @@ public:
 };
 ```
 
+**Go版：**
+
+```go
+type CQueue struct {
+     stack1 *list.List
+     stack2 *list.List
+}
+
+
+func Constructor() CQueue {
+	return CQueue{
+		stack1: list.New(),
+		stack2: list.New(),
+	}
+}
+
+
+func (this *CQueue) AppendTail(value int)  {
+	this.stack1.PushBack(value)
+}
+
+
+func (this *CQueue) DeleteHead() int {
+//如果第二个栈为空的情景
+    if this.stack2.Len() == 0{
+        for this.stack1.Len() >0{
+            //Remove删除链表中的元素e，并返回e.Value
+            //Back返回链表最后一个元素或nil
+            //PushBack将一个值为v的新元素插入链表的最后一个位置，返回生成的新元素。
+            this.stack2.PushBack(this.stack1.Remove(this.stack1.Back()))
+        }
+    }
+    if this.stack2.Len() !=0{
+        e :=this.stack2.Back()
+        this.stack2.Remove(e)
+        //e.value是interface{}类型，最终返回的是int类型，给他强转
+        return e.Value.(int)
+    }
+    return -1
+}
+```
+
 * 对于每次插入，时间复杂度显然为$O(1)$；对于删除，每次操作的**均摊复杂度为**$O(1)$，可以考虑每个元素最多会被从`del`栈弹入和弹出一次，或者考虑成如果你某一次将$k$个数从`val`栈弹入`del`栈，那接下来的$k$个数都有$O(1)$的删除复杂度，将$k$的复杂度均摊给这$k$个数，就相当于每个元素删除用了2次操作，也就是$O(1)$.
 * 空间复杂度$O(n)$, 因为我们开了两个栈，他们的容量加起来就是整数的个数$n$.

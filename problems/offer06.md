@@ -23,6 +23,8 @@ $0 \leq$ 链表长度 $\leq 10000$
 
 首先遍历一遍链表，得到链表长度，新建一个长度为链表长度的数组，再从尾部向数组中逐个添加元素。
 
+#### Java实现
+
 ```Java
 class Solution {
     public int[] reversePrint(ListNode head) {
@@ -41,6 +43,24 @@ class Solution {
     }
 }
 ```
+
+#### Go实现
+
+````go
+func reversePrint(head *ListNode) []int {
+    cn := 0
+    for p := head; p != nil; p = p.Next {	//遍历数组得到长度
+        cn++
+    }
+    node := make([]int, cn)
+    for head != nil {						//反向向数组中插入元素
+        node[cn-1] = head.Val
+        head = head.Next
+        cn--
+    }
+    return node
+}
+````
 
 * 由于我们遍历了两遍数组，因此时间复杂度为$O(n)$
 * 由于我们新建了一个长度为链表长度的数组，因此空间复杂度为$O(n)$
@@ -78,11 +98,14 @@ class Solution {
 ```c++
 class Solution {
 private:
+    // 这里我们将存答案的vector作为参数传进去，这里也可以像Java解法一样存为成员变量
     void reverseHelper(ListNode* head, vector<int> &vec) {
-        if(head == nullptr) {
+        if(head == nullptr) {		//如果head是尾部空节点直接返回
             return;
         }
+        // 递归调用，打印从next开始的链表
         reverseHelper(head -> next, vec);
+        // 将当前位置的value加入进vector
         vec.push_back(head -> val);
     }
 public:
@@ -92,6 +115,15 @@ public:
         return ans;
     }
 };
+```
+
+#### Go实现
+
+```go
+func reversePrint(head *ListNode) []int {
+    if head == nil{return nil}
+    return append(reversePrint(head.Next), head.Val) // return的时候最后一个先return,(recurrsion缩进问题)
+}
 ```
 
 * 由于用递归实现反向插入链表元素，时间复杂度是$O(n)$​，再把`ArrayList`中的元素都放到数组中，时间复杂度也是$O(n)$,因此整个算法时间复杂度是$O(n)$​
@@ -133,7 +165,7 @@ public:
             s.push(head -> val);
             head = head -> next;
         }
-        
+        // 利用stack的特性，每次pop出来的时候是最后插进去的元素
         vector<int> ans;
         while(!s.empty()){
             ans.emplace_back(s.top());
