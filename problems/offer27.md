@@ -8,11 +8,11 @@
 
 例如输入:
 
-<img src="C:\Users\86198\Desktop\LeetCode_solutions\problems\images\image-20220114155804968.png" alt="image-20220114155804968" style="zoom:65%;" />
+<img src="images\image-20220114155804968.png" alt="image-20220114155804968" style="zoom:65%;" />
 
 镜像输出:
 
-<img src="C:\Users\86198\Desktop\LeetCode_solutions\problems\images\image-20220114155839030.png" alt="image-20220114155839030" style="zoom:65%;" />
+<img src="images\image-20220114155839030.png" alt="image-20220114155839030" style="zoom:65%;" />
 
 ### 示例1
 

@@ -8,11 +8,11 @@
 
 例如，二叉树 [1,2,2,3,4,4,3] 是对称的。
 
-<img src="C:\Users\86198\Desktop\LeetCode_solutions\problems\images\image-20220124201146941.png" alt="image-20220124201146941" style="zoom:75%;" />
+<img src="images\image-20220124201146941.png" alt="image-20220124201146941" style="zoom:75%;" />
 
 但是下面这个 [1,2,2,null,3,null,3] 则不是镜像对称的:
 
-<img src="C:\Users\86198\Desktop\LeetCode_solutions\problems\images\image-20220124201223518.png" alt="image-20220124201223518" style="zoom:75%;" />
+<img src="images\image-20220124201223518.png" alt="image-20220124201223518" style="zoom:75%;" />
 
 ### 示例1
 
