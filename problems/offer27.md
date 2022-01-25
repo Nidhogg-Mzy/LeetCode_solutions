@@ -81,6 +81,18 @@ public:
 };
 ```
 
+#### Go实现
+
+``` Go
+func mirrorTree(root *TreeNode) *TreeNode {
+    if root == nil {
+        return nil
+    }
+    root.Left, root.Right = mirrorTree(root.Right), mirrorTree(root.Left)
+    return root
+}
+```
+
 * 时间复杂度：由于我们遍历二叉树的所有节点并在常数时间内对其进行交换，因此时间复杂度为$O(n)$
 * 空间复杂度：由于我们对于每个节点递归一遍，每次递归的时候新建一个`TreeNode`，因此空间复杂度为$O(n)$
 
