@@ -60,7 +60,18 @@ public:
     }
 };
 ```
-
+#### Go实现
+```go
+func reverseList(head *ListNode) *ListNode {
+    start := &ListNode{0,nil}
+    for head != nil {
+        tmp := head.Next
+        start.Next, head.Next = head, start.Next
+        head = tmp
+    }
+    return start.Next
+}
+```
 * 因为我们遍历了一遍链表，时间复杂度为$O(n)$​
 * 因为我们只新建了3个用来记node的节点，因此空间复杂度为$O(1)$
 
@@ -99,6 +110,19 @@ public:
         return new_head;
     }
 };
+```
+#### Go实现
+
+```go
+func reverseList(head *ListNode) *ListNode {
+    if head == nil || head.Next == nil {
+        return head
+    }
+    newHead := reverseList(head.Next)
+    head.Next.Next = head
+    head.Next = nil
+    return newHead
+}
 ```
 
 * 时间复杂度为$O(n)$，n为链表长度
