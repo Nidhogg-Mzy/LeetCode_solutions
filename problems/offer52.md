@@ -79,6 +79,29 @@ public class Solution {
 }
 ```
 
+#### C++实现
+
+```cpp
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        unordered_set<ListNode*> set;
+        while (headA != nullptr) {
+            set.insert(headA);
+            headA = headA -> next;
+        }
+        while (headB != nullptr) {
+            if (set.find(headB) != set.end()) {
+                return headB;
+            }
+            headB = headB -> next;
+        }
+        return nullptr;
+    }
+};
+```
+
+
 * 时间复杂度：因为我们最坏情况下会遍历一遍A链表和B链表，因此时间复杂度为$O(m+n)$，其中m是A的长度，n是B的长度
 * 空间复杂度：因为我们新建了一个HashSet来储存A中的所有节点，因此空间复杂度为$O(m)$，其中m是A的长度
 
@@ -105,6 +128,23 @@ public class Solution {
         return ptrA;
     }
 }
+```
+
+#### C++实现
+
+```cpp
+class Solution {
+public:
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        ListNode* ptrA = headA;
+        ListNode* ptrB = headB;
+        while(ptrA != ptrB){
+            ptrA = ptrA != nullptr ? ptrA -> next : headB;
+            ptrB = ptrB != nullptr ? ptrB -> next : headA;
+        }
+        return ptrA;
+    }
+};
 ```
 
 * 时间复杂度：因为最坏情况下，我们会把A、B链表遍历一遍，因此时间复杂度为$O(m+n)$​​，其中$m$​​为链表A的长度，$n$为链表B的长度
