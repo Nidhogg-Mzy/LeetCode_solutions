@@ -172,3 +172,44 @@ class Solution:
 
 
 
+
+
+### 3. 优化逐为判断的过程：使用内置函数
+
+为了计算二进制数中1的个数，我们可以直接使用语言的内置函数判断
+
+
+
+#### **java版：**
+
+```Java
+public class Solution {
+    // you need to treat n as an unsigned value
+    public int hammingWeight(int n) {
+        return Integer.bitCount(n);
+    }
+}
+```
+
+#### **C++版：**
+
+```cpp
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        return __builtin_popcount(n);
+    }
+};
+```
+
+#### Python3版：
+
+```python
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        return bin(n).count('1')
+```
+
+
+
+* 时间复杂度$O(1)$(可以这么认为), 空间复杂度$O(1)$.
