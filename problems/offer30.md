@@ -230,6 +230,63 @@ public:
 };
 ```
 
+**go版：**
+
+```go
+type MinStack struct {
+    stack []int // stack is LIFO, so that it should push at its back and pop (delete) the last element
+    minStack []int
+}
+
+
+/** initialize your data structure here. */
+func Constructor() MinStack {
+    return MinStack{
+        stack: []int{},
+        minStack: []int{math.MaxInt64},
+    }
+}
+
+
+func (this *MinStack) Push(x int)  {
+    this.stack = append(this.stack,x)
+    top:=this.minStack[len(this.minStack)-1]
+    this.minStack = append(this.minStack,min(x,top))    // always put the samllest number at the end of minStack
+}
+
+
+func (this *MinStack) Pop()  {
+    this.stack = this.stack[:len(this.stack)-1]
+    this.minStack = this.minStack[:len(this.minStack)-1]
+}
+
+
+func (this *MinStack) Top() int {
+    return this.stack[len(this.stack)-1]
+}
+
+
+func (this *MinStack) Min() int {
+    return this.minStack[len(this.minStack)-1]
+}
+
+func min(x,y int) int {
+    if x < y {
+        return x
+    }
+    return y
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * obj := Constructor();
+ * obj.Push(x);
+ * obj.Pop();
+ * param_3 := obj.Top();
+ * param_4 := obj.Min();
+ */
+```
+
 * 时间复杂度均为$O(1)$，符合题目要求； 空间复杂度$O(n)$，因为新建了两个与原数组等长的栈。
 
 
