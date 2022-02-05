@@ -147,7 +147,67 @@ public:
 };
 ```
 
-* 时间复杂度：因为最坏情况下，我们会把A、B链表遍历一遍，因此时间复杂度为$O(m+n)$​​，其中$m$​​为链表A的长度，$n$为链表B的长度
+#### Go实现
 
+``` go
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+    curA:=headA
+    curB:=headB
+    lenA,lenB:=0,0
+    // 求A, B的长度
+    for curA != nil {
+        curA = curA.Next
+        lenA++
+    }
+    for curB != nil {
+        curB = curB.Next
+        lenB++
+    }
+    var step int
+    var fast, slow *ListNode
+    // 请求长度差，并且让更长的链表先走相差的长度
+    if lenA > lenB {
+        step = lenA - lenB
+        fast, slow = headA, headB
+    } else {
+        step = lenB - lenA
+        fast, slow = headB, headA
+    }
+    for i:=0;i<step;i++{
+        fast = fast.Next
+    }
+    // 遍历两个链表遇到相同则跳出遍历
+    for fast != slow {
+        fast = fast.Next
+        slow = slow.Next
+    }
+    return fast
+}
+```
+
+* 时间复杂度：因为最坏情况下，我们会把A、B链表遍历一遍，因此时间复杂度为$O(m+n)$​​，其中$m$​​为链表A的长度，$n$为链表B的长度
 * 空间复杂度：因为我们只新建了两个指针，因此空间复杂度为$O(1)$
+
+### 3. Hashmap
+
+#### Go实现
+
+``` go
+func getIntersectionNode(headA, headB *ListNode) *ListNode {
+    m := make(map[int]*ListNode)
+    i:=headA
+    for i != nil{
+        m[i.Val]=i
+        i = i.Next
+    }
+    j:=headB
+    for j != nil{
+        if m[j.Val] == j{
+            return j
+        }
+        j = j.Next
+    }
+    return nil
+}
+```
 
