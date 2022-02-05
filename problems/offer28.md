@@ -86,5 +86,19 @@ private :
 };
 ```
 
+#### Go实现
+
+```go
+func isSymmetric(root *TreeNode) bool {
+    return search(root,root)
+}
+func search(left *TreeNode, right *TreeNode) bool {
+    return (left == nil && right == nil) || 
+    		(left != nil && right != nil && 
+             left.Val == right.Val && 
+             search(left.Left, right.Right) && search(left.Right, right.Left))//镜像搜索
+}
+```
+
 * 时间复杂度：因为最多调用$\frac{N}{2}$次递归，因此时间复杂度为$O(N)$
 * 空间复杂度：因为什么都没新建，因此空间复杂度为$O(1)$
