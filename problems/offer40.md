@@ -148,6 +148,55 @@ class Solution {
 }
 ```
 
+#### Go实现
+
+```go
+func getLeastNumbers(arr []int, k int) []int {
+    if k==0{
+        return []int{}
+    }
+
+    heap := arr[:k]
+    for i:= k;i >=0 ;i--{
+        heapify(heap,i)
+    }
+
+    // 从输入的第k个元素开始进行比较，如果小于最大堆的堆顶则
+    // 认为这个元素是TopK小的元素
+	for i:=k;i<len(arr);i++{
+        if arr[i] < heap[0]{
+            heap[0] = arr[i]
+            heapify(heap,0)
+        }
+    }
+    return heap
+}
+
+
+func heapify(arr []int,k int)[]int{
+    max := 0 
+    size := len(arr)
+    for k < size {
+        max = k
+        n := 2 * k
+        if n + 1 < size && arr[n+1] > arr[max] {
+            max = n + 1
+        }
+        if n + 2  < size && arr[n+2] > arr[max] {
+            max = n + 2
+        }
+        if max == k {
+            break
+        }
+        arr[k],arr[max] = arr[max],arr[k]
+        k = max
+    }
+    return arr
+}
+```
+
+
+
 * 时间复杂度：因为最坏情况是要对数组中每个元素都进行一次在大小为k的堆中的插入，因此时间复杂度为$O(Nlogk)$​​ 。
 * 空间复杂度：因为新建了大小为k的堆，因此空间复杂度为$O(k)$
 
@@ -195,5 +244,50 @@ class Solution {
 }
 ```
 
+#### Go实现
+
+```go
+func quicksort(arr []int) []int {
+    if len(arr) < 2 {
+        return arr
+    }
+    left := []int{}
+    right := []int{}
+    for _,value := range arr[1:] {  // 假设第一项为中间项，遍历第一项之后的数组
+        if value > arr[0] {
+            right = append(right, value) // 将大于第一项的数加到right数组里
+        } else {
+            left = append(left, value)  // 将小于第一项的数加到left数组里 
+        }
+    } 
+    return append(quicksort(left),append([]int{arr[0]},quicksort(right)...)...) // 递归调用，直到排好顺序
+}
+
+func getLeastNumbers(arr []int, k int) []int {
+    array := quicksort(arr) // 排好序之后的数组
+    return array[:k]
+}
+```
+
 * 时间复杂度：由于向下递归的子数组平均长度为$\frac{N}{2}$​​​，因此时间复杂度为$N+\frac{N}{2}+\frac{N}{4}+\cdots \frac{N}{N} = 2N-1$​,因此时间复杂度为$O(n)$
 * 空间复杂度：由于递归深度为$logN$，因此空间复杂度为$O(logN)$​
+
+### 5.特殊函数
+
+#### Go实现
+
+``` go
+func getLeastNumbers(arr []int, k int) []int {
+    sort.Slice(arr, func(i,j int) bool {
+        if arr[i] < arr[j] {
+            return true
+        }
+        return false
+    })
+
+    return arr[:k]
+}
+```
+
+* 时间复杂度: $O(nlog(n))$
+
