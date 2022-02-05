@@ -80,5 +80,36 @@ private:
 };
 ```
 
+#### Go实现
+
+```go
+// 二叉搜索树
+// 中序遍历,一般以题目要求，比如要第k大的,则在root.左，原root，root.右 以大到小的顺序进行recursion
+func kthLargest(root *TreeNode, k int) int {
+    if root == nil {
+        return 0
+    }
+    var (
+        stack []*TreeNode
+        count int
+        node = root
+        nums []int
+    )
+    for node != nil || len(stack) > 0 {
+        if node != nil {
+            stack = append(stack, node)
+            node = node.Left
+            continue
+        }
+        nodes := stack[len(stack)-1]    // 回到初始位置
+        nums = append(nums, nodes.Val)
+        stack = stack[:len(stack)-1]
+        node = nodes.Right
+        count++
+    }
+    return nums[len(nums)-k]
+}
+```
+
 * 时间复杂度：因为我们遍历了一遍整个二叉搜索树，因此时间复杂度为$O(n)$
 * 空间复杂度：因为我们新建了一个`ArrayList`来存中序遍历的结果，因此空间复杂度为$O(n)$
