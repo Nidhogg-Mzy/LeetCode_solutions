@@ -168,7 +168,7 @@ func getIntersectionNode(headA, headB *ListNode) *ListNode {
     // 请求长度差，并且让更长的链表先走相差的长度
     if lenA > lenB {
         step = lenA - lenB
-        fast, slow = headA, headB
+        fast, slow = headA, headB	
     } else {
         step = lenB - lenA
         fast, slow = headB, headA
