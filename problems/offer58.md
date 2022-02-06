@@ -47,6 +47,8 @@
 
 遍历给定字符串，如果位于字符串第一个字符处且第一个字符不为`" "`，或当前字符不为`" "`且当前字符前的一个字符为`" "`时，更新startde
 
+#### Java
+
 ```Java
 class Solution {
     public String reverseWords(String s) {
@@ -80,6 +82,107 @@ class Solution {
             toReturn += strings.get(0);
         }
         return toReturn;
+    }
+}
+```
+
+#### Go
+
+``` go
+func reverseWords(s string) string {
+    var return_string string
+    m := make(map[int]string)
+    substring := []rune{} 
+    count := 0
+    for _,j := range s {
+        if string(j) != " " {
+            substring = append(substring,j)
+            //fmt.Println(string(substring))
+            continue
+        } else {
+            if string(substring) == " "{
+                continue
+            } else {
+                m[count] = string(substring)
+                count++
+                substring = []rune{}
+            }
+            //fmt.Println(m[count])
+            
+            
+        }
+    }
+    //if string(substring) != " " {
+    m[count] = string(substring)
+        //substring = []rune{}
+    //}
+    m[count] = string(substring)
+    for i:=len(m)-1;i>=0;i--{
+        if m[i] != ""{
+            return_string = return_string + m[i]
+            return_string = return_string + " "
+        }
+        
+    }
+    if len(return_string) > 1 {
+        return_string = return_string[:len(return_string)-1]
+        return return_string
+    } else {
+        return ""
+    }
+    
+    return return_string
+}
+```
+
+### 2.双指针
+
+#### Go
+
+```go
+func reverseWords(ss string) string {
+    n:=len(ss)
+    l,r := 0, n-1
+    // [0, n-1]
+    s:=[]byte(ss)
+    // 处理两边空格二
+    for l<n && s[l] == ' ' {l++}
+    for r>=0 && s[r] == ' ' {r--}
+    // 起始位置(可能变化)
+    st:=l
+    for i:=l; i<=r;i ++{
+        if s[i] == ' ' {
+            reverse(s, st, i) // s is what we want to reverse, st is the start point(included), i is not included
+            st = i+1
+        }
+        if i == r {
+            reverse(s,st,r+1)   
+        }
+    }
+    reverse(s,l,r+1)
+    // 2.双指针处理 多余的空格
+    // [1,r]
+    // 双指针初始化为左边界
+    sl, sr := l,l
+    for sr <= r {
+        // 对于多于1的空格，按一个处理
+        f:=0
+        for sr <= r && s[sr] == ' ' {sr++; f = 1}
+        if f == 1 {sr--}
+        s[sl] = s[sr]
+        sl++
+        sr++
+    }
+    // 最后答案[1,sr)
+    return string(s[l:sl])
+}
+// [l,r)
+func reverse(s []byte,l,r int) {
+    r--
+    for l < r {
+        s[l], s[r] = s[r], s[l]
+        l++
+        r--
     }
 }
 ```

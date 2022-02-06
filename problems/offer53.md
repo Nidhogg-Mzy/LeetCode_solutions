@@ -113,6 +113,19 @@ class Solution:
         return len(nums)
 ```
 
+#### go版：
+
+``` go
+func missingNumber(nums []int) int {
+    for i:=0;i<len(nums);i++{
+        if nums[i] != i {
+            return i
+        }
+    }
+    return len(nums)
+}
+```
+
 * 时间复杂度$O(n)$, 空间复杂度$O(1)$.
 
 
@@ -189,5 +202,40 @@ class Solution:
         return r		# 此时l和r指向同一个位置，返回任何一个均可
 ```
 
+#### Go版：
+
+```go
+func missingNumber(nums []int) int {
+    left := 0
+    right := len(nums)
+    for left < right {
+        mid := (left + right) >> 1
+        if nums[mid] == mid {
+            left = mid + 1
+        } else {
+            right = mid
+        }
+    }
+    return right
+}
+```
+
 * 时间复杂度：$O(\log n)$​, 空间复杂度$O(1)$.
+
+### 3. 数学公式
+
+#### Go版
+
+``` go
+func missingNumber(nums []int) int {
+    total := (1+len(nums))*len(nums)/2
+    count:=0
+    for i:=0;i<len(nums);i++{
+        count = count + nums[i]
+    }
+    return total - count
+}
+```
+
+
 

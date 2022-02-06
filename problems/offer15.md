@@ -168,9 +168,20 @@ class Solution:
         return counter
 ```
 
+#### Go版：
+
+```go
+func hammingWeight(num uint32) int {
+    count := 0
+    for ; num > 0; {
+        num = num & (num-1) // 0 and 1 等价于 false and true 若num和num-1 有一个为0则num为0
+        count++
+    }
+    return count
+}
+```
+
 * 时间复杂度$O(1)$，因为最多循环31次， 空间复杂度$O(1)$.
-
-
 
 
 
@@ -210,6 +221,13 @@ class Solution:
         return bin(n).count('1')
 ```
 
+#### Go版：
 
+```go
+func hammingWeight(num uint32) int {
+    return bits.OnesCount(uint(num))
+}
+```
 
 * 时间复杂度$O(1)$(可以这么认为), 空间复杂度$O(1)$.
+

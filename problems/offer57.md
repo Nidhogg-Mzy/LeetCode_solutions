@@ -83,6 +83,68 @@ public:
 };
 ```
 
+**Go版：**
+
+```go
+func findContinuousSequence(target int) [][]int {
+    return_arr := [][]int{}
+    curr_line := []int{}
+    // Find the least left and least right with the max length
+    left:=1
+    right:=0
+    if target%2 == 0 {
+        right = target/2
+    } else {
+        right = (target + 1)/2
+    }
+    sum := (left+right)*(right-left+1)/2
+    for left < right {
+        if sum > target {
+            right--
+            sum = (left+right)*(right-left+1)/2
+        } 
+        if sum < target {
+            left++
+            right++
+            sum = (left+right)*(right-left+1)/2
+        } 
+        if sum == target {
+            for j:=left;j<=right;j++ {
+                curr_line = append(curr_line,j)
+            }
+            return_arr = append(return_arr,curr_line)
+            left++
+            break;
+        }
+    }
+    curr_line = []int{}
+    sum = (left+right)*(right-left+1)/2
+    for left < right {
+        if sum > target {
+            left++
+            sum = (left+right)*(right-left+1)/2
+        } 
+        if sum < target {
+            right++
+            sum = (left+right)*(right-left+1)/2
+        } 
+        if sum == target {
+            curr_line = []int{}
+            if left == right {
+                break
+            }
+            for k:=left;k<=right;k++ {
+                curr_line = append(curr_line,k)
+            }
+            return_arr = append(return_arr,curr_line)
+            left++
+            sum = (left+right)*(right-left+1)/2
+        }
+    }
+    return return_arr
+}
+```
+
 * 时间复杂度$O(n)$, 空间复杂度$O(n)$.
 
 
@@ -144,6 +206,33 @@ public:
         return ans;
     }
 };
+```
+
+**Go版：**
+
+```go
+func findContinuousSequence(target int) [][]int {
+    i, j, sum := 1, 1, 0
+    ret := make([][]int, 0)
+    for i <= target>>1 {
+        if sum < target {
+            sum += j
+            j++
+        } else if sum > target {
+            sum -= i
+            i++
+        } else {
+            tmp := make([]int, 0, j-i)
+            for m := i; m < j; m++ {
+                tmp = append(tmp, m)
+            }
+            ret = append(ret, tmp)
+            sum -= i
+            i++
+        }
+    }
+    return ret
+}
 ```
 
 * 时间复杂度：$O(n)$​, 空间复杂度$O(1)$.
